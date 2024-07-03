@@ -18,9 +18,21 @@ app.post('/submit-form', async (req, res) => {
     }
 
     try {
+
+        const embed = {
+            description: message,
+            author: {
+                name: `${name} (${email})`
+            },
+            title: "Nouveau Message",
+            color: 12320768,
+            timestamp: new Date().toISOString()
+        };
+
         await axios.post(DISCORD_WEBHOOK_URL, {
-            content: `Nouveau message de ${name} (${email}):\n\n${message}`
+            embeds: [embed]
         });
+
         res.status(200).json({ success: 'Message envoyé avec succès à Discord' });
     } catch (error) {
         console.error('Erreur lors de l\'envoi du message à Discord:', error);
