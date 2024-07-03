@@ -23,7 +23,6 @@ Ce projet est une application Node.js utilisant Express.js pour recevoir des sou
 ## Configuration
 
 Créez un fichier `.env.local` à la racine du projet et ajoutez les variables d'environnement suivantes :
-    ```
+
     PORT=3000
     DISCORD_WEBHOOK_URL=votre_webhook_discord_url
-    ```
