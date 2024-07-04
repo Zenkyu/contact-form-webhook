@@ -29,7 +29,7 @@ app.post('/submit-form', async (req, res) => {
 
     // Validation du message
     if (!message || message.length > 1000) {
-        return res.status(400).json({ error: `Le message dépasse ${maxMessageLength} caractères` });
+        return res.status(400).json({ error: `Le message dépasse 1000 caractères` });
     }
 
     try {
