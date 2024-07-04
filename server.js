@@ -13,8 +13,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/submit-form', async (req, res) => {
     const { name, email, message } = req.body;
 
-    if (!name || !email || !message) {
-        return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
+    // Validation de l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailLocalPart = email.split('@')[0];
+
+    if (!email || !emailRegex.test(email) || emailLocalPart.length > 64) {
+        return res.status(400).json({ error: "L'adresse email est invalide ou dépasse 64 caractères avant le @" });
+    }
+
+    // Validation du nom
+    const nameRegex = /^[a-zA-ZÀ-ÿ\s]{1,32}$/;
+    if (!name || !nameRegex.test(name)) {
+        return res.status(400).json({ error: "Le nom est invalide ou dépasse 32 caractères, ou contient des caractères spéciaux non autorisés" });
+    }
+
+    // Validation du message
+    if (!message || message.length > 1000) {
+        return res.status(400).json({ error: `Le message dépasse ${maxMessageLength} caractères` });
     }
 
     try {
